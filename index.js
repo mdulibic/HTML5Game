@@ -63,20 +63,39 @@ var myGameArea = {
     }
 }
 
+function checkIfTouched(x, y) {
+
+}
 
 myGameArea.canvas.addEventListener('click', (event) => {
     components.forEach((c) => {
-        if (myGameArea.context.isPointInStroke(c, event.offsetX, event.clientY)) {
-            alert('clicked an element');
+        if (c.contains(event.clientX, event.clientY)) {
+            hitNumber++;
             components.splice(components.indexOf(c), 1);
             updateGameArea();
         }
     })
+    if(components.length === 0) {
+        alert("Win, good job!");
+        startGame();
+        hitNumber = 0;
+    }
 })
 
 function component(width, height, color, x, y, type) {
-    this.type = type; this.width = width; this.height = height; this.speed_x = 2; this.speed_y = 2; this.x = x;
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    this.speed_x = Math.floor(Math.random() * (10 - 0.5)) + 0.5;
+    this.speed_y = Math.floor(Math.random() * (10 - 0.5)) + 0.5;
+    this.x = x;
     this.y = y;
+
+    this.contains = function (x, y) {
+        return this.x <= x && x <= this.x + this.width &&
+            this.y <= y && y <= this.y + this.height;
+    }
+
     this.update = function() {
         ctx = myGameArea.context;
         ctx.save();
@@ -85,6 +104,7 @@ function component(width, height, color, x, y, type) {
         ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
         ctx.restore();
     }
+
     this.newPos = function() {
         if (this.x - this.width / 2 < 0) this.speed_x = 2;
         else if ((this.x + this.width / 2) >= myGameArea.context.canvas.width) this.speed_x = -2;
