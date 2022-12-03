@@ -86,8 +86,8 @@ function component(width, height, color, x, y, type) {
     this.type = type;
     this.width = width;
     this.height = height;
-    this.speed_x = Math.floor(Math.random() * (10 - 0.5)) + 0.5;
-    this.speed_y = Math.floor(Math.random() * (10 - 0.5)) + 0.5;
+    this.speed_x = Math.floor(Math.random() * (5 - 0.5)) + 0.5;
+    this.speed_y = Math.floor(Math.random() * (5 - 0.5)) + 0.5;
     this.x = x;
     this.y = y;
 
