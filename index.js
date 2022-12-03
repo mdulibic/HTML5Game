@@ -2,7 +2,14 @@ const components = [];
 
 function startGame() {
     for (let i = 0; i < generateRandom(); i++) {
-        components.push(new component(30, 30, generateColor(), generateRandomWithMax(480), generateRandomWithMax(270)));
+        components.push(new component(30, 30,
+            generateColor(),
+            generateRandomWithMax(480),
+            generateRandomWithMax(270),
+            Math.floor(Math.random() * (5 - 0.5)) + 0.5,
+            Math.floor(Math.random() * (5 - 0.5)) + 0.5
+            )
+        );
     }
     myGameArea.start();
 }
@@ -63,10 +70,6 @@ var myGameArea = {
     }
 }
 
-function checkIfTouched(x, y) {
-
-}
-
 myGameArea.canvas.addEventListener('click', (event) => {
     components.forEach((c) => {
         if (c.contains(event.clientX, event.clientY)) {
@@ -82,12 +85,11 @@ myGameArea.canvas.addEventListener('click', (event) => {
     }
 })
 
-function component(width, height, color, x, y, type) {
-    this.type = type;
+function component(width, height, color, x, y, speed_x, speed_y) {
     this.width = width;
     this.height = height;
-    this.speed_x = Math.floor(Math.random() * (5 - 0.5)) + 0.5;
-    this.speed_y = Math.floor(Math.random() * (5 - 0.5)) + 0.5;
+    this.speed_x = Math.floor(Math.random() * (8 - 0.5)) + 0.5;
+    this.speed_y = Math.floor(Math.random() * (8 - 0.5)) + 0.5;
     this.x = x;
     this.y = y;
 
@@ -106,10 +108,10 @@ function component(width, height, color, x, y, type) {
     }
 
     this.newPos = function() {
-        if (this.x - this.width / 2 < 0) this.speed_x = 2;
-        else if ((this.x + this.width / 2) >= myGameArea.context.canvas.width) this.speed_x = -2;
-        if (this.y - this.height / 2 < 0) this.speed_y = -2;
-        else if ((this.y + this.height / 2) >= myGameArea.context.canvas.height) this.speed_y = 2;
+        if (this.x - this.width / 2 < 0) this.speed_x = Math.floor(Math.random() * (8 - 0.5)) + 0.5;
+        else if ((this.x + this.width / 2) >= myGameArea.context.canvas.width) this.speed_x = -Math.floor(Math.random() * (8 - 0.5)) + 0.5;
+        if (this.y - this.height / 2 < 0) this.speed_y = -Math.floor(Math.random() * (8 - 0.5)) + 0.5;
+        else if ((this.y + this.height / 2) >= myGameArea.context.canvas.height) this.speed_y = Math.floor(Math.random() * (8 - 0.5)) + 0.5;
 
     this.x += this.speed_x;
     this.y -= this.speed_y;
